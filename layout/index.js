@@ -2,13 +2,14 @@ import Head from "next/head";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
+
 export default function Layout({
   children,
   metaTitle = "Hello Next Js",
   metaDescription,
 }) {
   return (
-    <div className="p-20 flex justify-between underline font-bold text-3xl ">
+    <div className="p-20 flex justify-between underline font-bold text-3xl  ">
       <Head>
         <title>{`Create Next App - ${metaTitle}`}</title>
         <meta

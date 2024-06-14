@@ -1,11 +1,9 @@
-import withAuth from "../with_auth";
-import Menu from "../menu";
-import styles from './styles.module.css';
+import Layout from "@/layout";
 
 const Header = () => {
   return (
-    <div className="text-3xl font-bold underline">
-      <Menu />
+    <div>
+      <h1>Header</h1>
     </div>
   );
 };

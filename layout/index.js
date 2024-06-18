@@ -5,7 +5,7 @@ import Footer from "@/components/footer";
 
 export default function Layout({
   children,
-  metaTitle = "Hello Next Js",
+  metaTitle,
   metaDescription,
 }) {
   return (

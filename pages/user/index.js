@@ -1,7 +1,9 @@
 import Layout from "@/layout";
 
 export default function user() {
-    return <Layout>
-        <h1>Data User</h1>
+  return (
+    <Layout metaTitle="User">
+      <h1>Data User</h1>
     </Layout>
+  );
 }

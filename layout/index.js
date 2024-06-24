@@ -9,7 +9,7 @@ export default function Layout({
   metaDescription,
 }) {
   return (
-    <div className="p-20 flex justify-between underline font-bold text-3xl  ">
+    <div className="p-20  underline font-bold text-3xl  ">
       <Head>
         <title>{`Create Next App - ${metaTitle}`}</title>
         <meta
@@ -20,7 +20,9 @@ export default function Layout({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      <br/>
       {children}
+      <br/>
       <Footer />
     </div>
   );

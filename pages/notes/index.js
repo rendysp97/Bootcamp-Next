@@ -32,6 +32,22 @@ export default function Notes() {
     fetchingData();
   }, []);
 
+
+  const HandleDelete = async (id) => {
+    try {
+     const response = await fetch(
+      `https://service.pace-unv.cloud/api/notes/delete/${id}`,
+      {
+       method: "DELETE",
+      })
+      
+      const result = await response.json();
+      if (result?.success) {
+       router.reload();
+      }
+    } catch (error) {}
+   };
+
   return (
     <>
       <LayoutComponent metaTitle="Notes">
@@ -46,7 +62,7 @@ export default function Notes() {
           </Flex>
           <Flex>
             <Grid templateColumns="repeat(3, 1fr)" gap={5}>
-              {notes?.data?.map(({title,description}) => (
+              {notes?.data?.map(({title,description,id}) => (
                 <GridItem>
                   <Card>
                     <CardHeader>
@@ -57,13 +73,13 @@ export default function Notes() {
                     </CardBody>
                     <CardFooter justify="space-between" flexWrap="wrap">
                       <Button
-                        onClick={() => router.push(`/notes/edit/${item?.id}`)}
+                        onClick={() => router.push(`/notes/edit/${id}`)}
                         flex="1"
                         variant="ghost"
                       >
                         Edit
                       </Button>
-                      <Button flex="1" colorScheme="red">
+                      <Button flex="1" colorScheme="red" onClick={() => HandleDelete(id)}> 
                         Delete
                       </Button>
                     </CardFooter>

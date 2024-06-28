@@ -14,39 +14,30 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useQueries } from "@/hooks/useQueries";
 
 const LayoutComponent = dynamic(() => import("@/layout"));
 
 export default function Notes() {
   const router = useRouter();
-  const [notes, setNotes] = useState();
 
-  useEffect(() => {
-    async function fetchingData() {
-      const res = await (
-        await fetch("https://service.pace-unv.cloud/api/notes")
-      ).json();
-
-      setNotes(res);
-    }
-    fetchingData();
-  }, []);
-
-
+  const { data: listNotes } = useQueries({ prefixUrl: "https://service.pace-unv.cloud/api/notes" });  
+  
   const HandleDelete = async (id) => {
     try {
-     const response = await fetch(
-      `https://service.pace-unv.cloud/api/notes/delete/${id}`,
-      {
-       method: "DELETE",
-      })
-      
+      const response = await fetch(
+        `https://service.pace-unv.cloud/api/notes/delete/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
       const result = await response.json();
       if (result?.success) {
-       router.reload();
+        router.reload();
       }
     } catch (error) {}
-   };
+  };
 
   return (
     <>
@@ -62,7 +53,7 @@ export default function Notes() {
           </Flex>
           <Flex>
             <Grid templateColumns="repeat(3, 1fr)" gap={5}>
-              {notes?.data?.map(({title,description,id}) => (
+              {listNotes?.data?.map(({ title, description, id }) => (
                 <GridItem>
                   <Card>
                     <CardHeader>
@@ -79,7 +70,11 @@ export default function Notes() {
                       >
                         Edit
                       </Button>
-                      <Button flex="1" colorScheme="red" onClick={() => HandleDelete(id)}> 
+                      <Button
+                        flex="1"
+                        colorScheme="red"
+                        onClick={() => HandleDelete(id)}
+                      >
                         Delete
                       </Button>
                     </CardFooter>

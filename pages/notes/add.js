@@ -11,33 +11,32 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useMutation } from "@/hooks/useMutation"; 
 
 const LayoutComponent = dynamic(() => import("@/layout"));
 
 export default function AddNotes() {
   const router = useRouter();
+
+  const { mutate } = useMutation();
+
+
   const [notes, setNotes] = useState({
     title: "",
     description: "",
   });
 
+  
   const HandleSubmit = async () => {
-    try {
-      const response = await fetch("https://service.pace-unv.cloud/api/notes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(notes),
-      });
-      const result = await response.json();
-      if (result?.success) {
-        router.push("/notes");
-      }
-    } catch (err) {
-      console.log(err);
+    const response = await mutate({
+     url: "https://service.pace-unv.cloud/api/notes",
+     payload: notes,
+    });
+    if (response?.success) {
+     router.push("/notes");
     }
-  };
+   };
+     
 
   return (
     <>

@@ -15,14 +15,22 @@ import {
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useQueries } from "@/hooks/useQueries";
+import useSWR from "swr";
+import fetcher from "@/utils/fetchers";
 
 const LayoutComponent = dynamic(() => import("@/layout"));
 
 export default function Notes() {
   const router = useRouter();
 
-  const { data: listNotes } = useQueries({ prefixUrl: "https://service.pace-unv.cloud/api/notes" });  
-  
+  // const { data: listNotes } = useQueries({ prefixUrl: "https://service.pace-unv.cloud/api/notes" });
+
+  const {
+    data: listNotes,
+    isLoading,
+    error,
+  } = useSWR("https://service.pace-unv.cloud/api/notes", fetcher,{revalidateOnFocus:true});
+
   const HandleDelete = async (id) => {
     try {
       const response = await fetch(

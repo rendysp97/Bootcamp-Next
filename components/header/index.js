@@ -17,8 +17,14 @@ import { useQueries } from "@/hooks/useQueries";
 import Cookies from "js-cookie";
 import { useMutation } from "@/hooks/useMutation";
 import { useRouter } from "next/router";
+import { UserContext } from "@/context/userContext";
+import { useContext } from "react";
+
 
 const Header = () => {
+
+  const userData = useContext(UserContext)
+
   const { mutate } = useMutation();
   const router = useRouter();
 
@@ -47,6 +53,8 @@ const Header = () => {
     }
   };
 
+  console.log(`userData ${userData}`)
+
   return (
     <ul>
       <li>
@@ -64,7 +72,7 @@ const Header = () => {
       <li>
         <Menu>
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-            {data?.data?.name}
+            {userData?.name}
           </MenuButton>
           <MenuList>
             <MenuItem onClick={() => handleLogout()}>Log out</MenuItem>
